@@ -6,6 +6,8 @@ import { BaseEntity, Column, CreateDateColumn, Entity, BeforeUpdate,
 import { Parents_Users } from "./parents_users.entity";
 import * as bcrypt from 'bcryptjs';
 import { UserEducated } from "src/modules/user_educateds/entities/user_educated.entity";
+import { StudentSubject } from "src/modules/student_subjects/entities/student_subject.entity";
+import { Transaction } from "src/modules/transactions/entities/transaction.entity";
 
 
 @Entity({name:'users'})
@@ -61,7 +63,6 @@ export class User extends BaseEntity {
 
 
     @OneToMany(()=>Attendance , (attendance)=>attendance.user)
-    // @JoinColumn({n})
     attendance:Attendance;
 
     @OneToMany(()=>Parents_Users,(parent_user)=>parent_user.user)
@@ -71,6 +72,13 @@ export class User extends BaseEntity {
 
     @OneToMany(()=>UserEducated , user_educated=>user_educated.user)
     user_educated:UserEducated[];
+
+    @OneToMany(()=>StudentSubject,(studentsubject)=>studentsubject.user)
+    studentsubject:StudentSubject[];
+
+    //transaction
+    @OneToMany(()=> Transaction , (transaction)=> transaction.user)
+    transaction:Transaction[];
 
 
     @BeforeInsert()

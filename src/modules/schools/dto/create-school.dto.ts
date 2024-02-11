@@ -1,1 +1,6 @@
-export class CreateSchoolDto {}
+export class CreateSchoolDto {
+    name:string;
+
+    address:string;
+    
+}

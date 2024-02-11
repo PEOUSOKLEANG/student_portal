@@ -1,10 +1,11 @@
 import { School } from "src/modules/schools/entities/school.entity";
+import { User } from "src/modules/users/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name:'transactions'})
 export class Transaction {
     @PrimaryGeneratedColumn()
-    id:string;
+    id:number;
 
 
     @Column()
@@ -36,5 +37,7 @@ export class Transaction {
     school:School;
 
     //user_id
-
+    @ManyToOne(()=>User,(user)=>user.transaction)
+    @JoinColumn({name:'user_id'})
+    user:User;
 }

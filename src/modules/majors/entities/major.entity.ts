@@ -7,10 +7,13 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGene
 export class Major {
 
     @PrimaryGeneratedColumn()
-    id:string;
+    id:number;
 
     @Column()
     name:string;
+
+    @Column()
+    description:string;
 
     @ManyToOne(()=>School, (school)=> school.majors , { onDelete: 'CASCADE' })
     @JoinColumn({name:'school_id'})

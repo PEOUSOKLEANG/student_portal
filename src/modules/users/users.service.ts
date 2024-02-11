@@ -25,16 +25,14 @@ export class UsersService {
       user.dob = createuserDto.dob
       user.email =  createuserDto.email
       user.current_ad =  createuserDto.current_ad
+      // user.current_study = 
       await user.save();
     } catch (error) {
       throw new HttpException({
         status:HttpStatus.INTERNAL_SERVER_ERROR,
         message:'This not user'
-      },HttpStatus.INTERNAL_SERVER_ERROR)
-
-      
+      },HttpStatus.INTERNAL_SERVER_ERROR) 
     }
-    
   }
 
 }

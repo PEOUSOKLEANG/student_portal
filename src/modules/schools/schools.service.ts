@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateSchoolDto } from './dto/create-school.dto';
 import { UpdateSchoolDto } from './dto/update-school.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { School } from './entities/school.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SchoolsService {
-  create(createSchoolDto: CreateSchoolDto) {
-    return 'This action adds a new school';
+  constructor(@InjectRepository(School) private schoolRepository:Repository<School>){}
+  
+  async createSchool(name:string, address:string){
+    try {
+      const school = new School();
+      school.name = name
+      school.address = address
+      await this.schoolRepository.save(school);
+
+      return`${name} is created`;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
-  findAll() {
-    return `This action returns all schools`;
+  async editInfoSchool(id:number,name:string,address:string){
+    try {
+      const isSchool = await this.schoolRepository.findOne({where:{id:id}});
+      if(!isSchool) throw new Error('This is not found');
+      else{
+        isSchool.name = name
+        isSchool.address = address
+        await this.schoolRepository.save(isSchool);
+      }
+    } catch (error) {
+      throw new HttpException({
+        status:HttpStatus.INTERNAL_SERVER_ERROR,
+        message:'This is not found ' 
+      },HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} school`;
-  }
+  // async remove(){}
 
-  update(id: number, updateSchoolDto: UpdateSchoolDto) {
-    return `This action updates a #${id} school`;
-  }
 
-  remove(id: number) {
-    return `This action removes a #${id} school`;
-  }
+
 }

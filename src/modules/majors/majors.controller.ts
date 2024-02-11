@@ -1,34 +1,28 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { MajorsService } from './majors.service';
-import { CreateMajorDto } from './dto/create-major.dto';
+import { CreateMajorDto, MajorDto } from './dto/create-major.dto';
 import { UpdateMajorDto } from './dto/update-major.dto';
+import { Major } from './entities/major.entity';
 
 @Controller('majors')
 export class MajorsController {
   constructor(private readonly majorsService: MajorsService) {}
 
   @Post()
-  create(@Body() createMajorDto: CreateMajorDto) {
-    return this.majorsService.create(createMajorDto);
+  async createMajor(@Body() createMajorDto:CreateMajorDto):Promise<Major>{
+    return await this.majorsService.createMajor(createMajorDto)
   }
 
-  @Get()
-  findAll() {
-    return this.majorsService.findAll();
+  @Patch()
+  async editMajor(@Body() majoDto:MajorDto , @Param('id') id:number){
+    return await this.majorsService.editMajor(+id,majoDto);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.majorsService.findOne(+id);
-  }
+ @Delete()
+ async removeMajor(@Body() school:number,@Param('id') id:number){
+  return this.majorsService.removeMajor(id,school);
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMajorDto: UpdateMajorDto) {
-    return this.majorsService.update(+id, updateMajorDto);
-  }
+ } 
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.majorsService.remove(+id);
-  }
+
 }
