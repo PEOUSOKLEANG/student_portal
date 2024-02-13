@@ -88,43 +88,44 @@ $ npm i --save class-validator class-transformer
 ```bash
 #Example One to One
   # This One To One  write this code in Entity 'User'(Noted)
-$ @OneToOne(()=>Major , (current_study)=>current_study.user,{cascade:true})
+ @OneToOne(()=>Major , (current_study)=>current_study.user,{cascade:true})
     @JoinColumn()
     current_study:Major;
 
   # This One To One  write this code in Entity 'Mojor'(Noted)
 
-$ @OneToOne(()=>User , (user)=>user.current_study)
+ @OneToOne(()=>User , (user)=>user.current_study)
     @JoinColumn()
     user:User;
 #Exam Many to one or One to many
   # This Many to one  write this code in Entity 'User'(Noted)
-$ @ManyToOne(()=> Attendance ,(attendance)=>attendance.user)
+ @ManyToOne(()=> Attendance ,(attendance)=>attendance.user)
   @JoinColumn({name:'user_id'})
   attendance:Attendance;
   
   
   # This One TO Many write this code in Entity 'Attendance'(Noted)
-$ @OneToMany(()=> User, (user)=>user.attendance)
+ @OneToMany(()=> User, (user)=>user.attendance)
   user:User[];
 
 # Many to Many 
   # This One To Many write this  code In Entity 'User'  
-$ @OneToMany(()=>Parents_Users,(parent_user)=>parent_user.user)
+ @OneToMany(()=>Parents_Users,(parent_user)=>parent_user.user)
     parent_user:Parents_Users[];
 
  # This One To Many write this  code In Entity 'Parent'  
 
-$ @OneToMany(()=>Parents_Users , (parent_user)=> parent_user.parent)
+ @OneToMany(()=>Parents_Users , (parent_user)=> parent_user.parent)
     parent_user:Parents_Users[];
 
     # This Many To One write this  code In Entity 'Parent_Users'  
-$ @ManyToOne(()=>User,(user)=>user.parent_user)
+ @ManyToOne(()=>User,(user)=>user.parent_user)
     user:User;
     # This Many To One write this  code In Entity 'Parent_Users' 
-$ @ManyToOne(()=>Parent , (parent)=>parent.parent_user)
+ @ManyToOne(()=>Parent , (parent)=>parent.parent_user)
     parent:Parent;
- # For this many to many I use  3 entity names. (User and Parent) OneToMany Parent_User,and Parent_User ManyToOne (User and Parent)
+ # For this many to many I use  3 entity names. 
+ # (User and Parent) OneToMany Parent_User,and Parent_User ManyToOne (User and Parent)
 
 ```
 
