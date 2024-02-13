@@ -60,6 +60,74 @@ $ npm run test:cov
 
 ## Support
 
+## My Project Set Up
+```bash
+#CLI Install Nest JS
+$ nest new project-name
+# CLI => install database (Example using Postgresql)
+$ npm install --save @nestjs/typeorm typeorm pg
+
+#  Generate Resource(Controllers,Service and Module)
+$ nest generate resource ./name diractory
+
+# @nestjs/config
+$ npm install --save @nestjs/config
+# Example: import { ConfigModule } from '@nestjs/config';
+
+# Hashing Data
+$ npm i bcrypt 
+$ npm i -D @types/bcrypt
+# Example: password is most to be Hashing
+
+
+#Using the built-in ValidationPipe
+$ npm i --save class-validator class-transformer
+
+```
+## TypeOrm of this Project 
+```bash
+#Example One to One
+  # This One To One  write this code in Entity 'User'(Noted)
+$ @OneToOne(()=>Major , (current_study)=>current_study.user,{cascade:true})
+    @JoinColumn()
+    current_study:Major;
+
+  # This One To One  write this code in Entity 'Mojor'(Noted)
+
+$ @OneToOne(()=>User , (user)=>user.current_study)
+    @JoinColumn()
+    user:User;
+#Exam Many to one or One to many
+  # This Many to one  write this code in Entity 'User'(Noted)
+$ @ManyToOne(()=> Attendance ,(attendance)=>attendance.user)
+  @JoinColumn({name:'user_id'})
+  attendance:Attendance;
+  
+  
+  # This One TO Many write this code in Entity 'Attendance'(Noted)
+$ @OneToMany(()=> User, (user)=>user.attendance)
+  user:User[];
+
+# Many to Many 
+  # This One To Many write this  code In Entity 'User'  
+$ @OneToMany(()=>Parents_Users,(parent_user)=>parent_user.user)
+    parent_user:Parents_Users[];
+
+ # This One To Many write this  code In Entity 'Parent'  
+
+$ @OneToMany(()=>Parents_Users , (parent_user)=> parent_user.parent)
+    parent_user:Parents_Users[];
+
+    # This Many To One write this  code In Entity 'Parent_Users'  
+$ @ManyToOne(()=>User,(user)=>user.parent_user)
+    user:User;
+    # This Many To One write this  code In Entity 'Parent_Users' 
+$ @ManyToOne(()=>Parent , (parent)=>parent.parent_user)
+    parent:Parent;
+ # For this many to many I use  3 entity names. (User and Parent) OneToMany Parent_User,and Parent_User ManyToOne (User and Parent)
+
+```
+
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
